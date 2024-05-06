@@ -2,19 +2,21 @@
 function sketch() {
 
   function drawPad() {
-    while (sketchpad.hasChildNodes()) {
-      sketchpad.removeChild(sketchpad.firstChild);
+    let squares = gridSize*gridSize;
+    
+    while (sketchPad.hasChildNodes()) {
+      sketchPad.removeChild(sketchPad.firstChild);
     }
 
-    for (let i = 0; i < gridSize && i < 100; i++) {
+    for (let i = 0; i < squares && i < 10000; i++) {
       const div = document.createElement("div");
       div.classList.add("grid");
-      sketchpad.appendChild(div);
+      sketchPad.appendChild(div);
     }
   }
 
   function getGridSize() {
-    gridSize = prompt("Choose a grid size up to 100");
+    gridSize = prompt("Choose a grid size up to 100 columns");
 
     switch (true) {
       case gridSize == null:
@@ -35,7 +37,7 @@ function sketch() {
     drawPad();
   }
 
-  const sketchpad = document.getElementById("sketch-pad")
+  const sketchPad = document.getElementById("sketch-pad")
   const buttonReset = document.getElementById("reset")
   const buttonGridSize = document.getElementById("grid-size")
 
