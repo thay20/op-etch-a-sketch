@@ -2,21 +2,28 @@
 function sketch() {
 
   function drawPad() {
-    let squares = gridSize*gridSize;
     
     while (sketchPad.hasChildNodes()) {
       sketchPad.removeChild(sketchPad.firstChild);
     }
 
-    for (let i = 0; i < squares && i < 10000; i++) {
-      const div = document.createElement("div");
-      div.classList.add("grid");
-      sketchPad.appendChild(div);
+    for (let i = 0; i < gridSize && i < 100; i++) {
+      const row = document.createElement("div");
+      
+      row.classList.add("grid-row");
+
+      for (let j =0; j < gridSize && j < 100; j++) {
+        const cell = document.createElement("div");
+        cell.classList.add("grid-cell");
+        row.appendChild(cell);
+      }
+
+      sketchPad.appendChild(row);
     }
   }
 
   function getGridSize() {
-    gridSize = prompt("Choose a grid size up to 100 columns");
+    gridSize = prompt("Choose a grid size up to 100 columns", gridSize);
 
     switch (true) {
       case gridSize == null:
@@ -32,10 +39,6 @@ function sketch() {
     }
   }
 
-  function reset() {
-    gridSize = 16;
-    drawPad();
-  }
 
   const sketchPad = document.getElementById("sketch-pad")
   const buttonReset = document.getElementById("reset")
@@ -44,22 +47,15 @@ function sketch() {
   let gridSize = 16;
 
   buttonGridSize.addEventListener("click", () => getGridSize())
-  buttonReset.addEventListener("click", () => reset())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  buttonReset.addEventListener("click", () => drawPad())
+  
+  sketchPad.addEventListener("mouseover", (e) => {
+    if (e.target && e.target.matches("div.grid-cell")) {
+      e.target.classList.add("grid-color");
+    }
+  })
 
   drawPad();
+
 }
 sketch();
